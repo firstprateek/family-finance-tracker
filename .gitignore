@@ -38,6 +38,10 @@ yarn-error.log*
 # database
 /data/
 
+# internal documentation
+SPEC.md
+LEARN.md
+
 # vercel
 .vercel
 

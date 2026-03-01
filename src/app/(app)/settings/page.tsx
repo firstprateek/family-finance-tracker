@@ -5,6 +5,7 @@ export default async function SettingsPage() {
   const users = getUsers();
   const currency = getSetting("currency") || "USD";
   const currencySymbol = getSetting("currency_symbol") || "$";
+  const monthlyTarget = parseFloat(getSetting("monthly_target") || "0");
 
   return (
     <div className="space-y-4">
@@ -17,6 +18,7 @@ export default async function SettingsPage() {
         }))}
         currency={currency}
         currencySymbol={currencySymbol}
+        monthlyTarget={monthlyTarget}
       />
     </div>
   );

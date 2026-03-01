@@ -8,6 +8,7 @@ import { updateUser, setSetting } from "@/lib/dal/users";
 export async function updateSettingsAction(data: {
   users: { id: string; display_name: string; income: number }[];
   splitMode?: string;
+  monthlyTarget?: number;
 }): Promise<{ success: boolean; error?: string }> {
   ensureDbInitialized();
   const session = await getSession();
@@ -22,6 +23,10 @@ export async function updateSettingsAction(data: {
 
   if (data.splitMode) {
     setSetting("split_mode", data.splitMode);
+  }
+
+  if (data.monthlyTarget !== undefined) {
+    setSetting("monthly_target", String(data.monthlyTarget || 0));
   }
 
   revalidatePath("/dashboard");

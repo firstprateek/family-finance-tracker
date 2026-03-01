@@ -38,6 +38,7 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
   const users = getUsers();
   const splitMode = (getSetting("split_mode") || "income_ratio") as SplitMode;
   const currencySymbol = getSetting("currency_symbol") || "$";
+  const monthlyTarget = parseFloat(getSetting("monthly_target") || "0");
 
   const expenses = getExpensesByMonth(month);
   const monthlyTotals = getMonthlyTotals(month);
@@ -92,8 +93,8 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
         />
       )}
 
-      {/* Month vs average comparison */}
-      {averageData.monthCount > 0 && totalExpenses > 0 && (
+      {/* Month vs target/average comparison */}
+      {(averageData.monthCount > 0 || monthlyTarget > 0) && totalExpenses > 0 && (
         <MonthComparison
           currentTotal={totalExpenses}
           averageTotal={averageData.average}
@@ -102,6 +103,7 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
           isProrated={isCurrentMo}
           daysElapsed={isCurrentMo ? getDaysElapsedInMonth(month) : undefined}
           daysInMonth={isCurrentMo ? getDaysInMonth(month) : undefined}
+          targetAmount={monthlyTarget > 0 ? monthlyTarget : undefined}
         />
       )}
 

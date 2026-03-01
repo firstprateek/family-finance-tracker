@@ -14,18 +14,21 @@ interface SettingsFormProps {
   users: { id: string; display_name: string; income: number }[];
   currency: string;
   currencySymbol: string;
+  monthlyTarget: number;
 }
 
 export function SettingsForm({
   users: initialUsers,
+  monthlyTarget: initialTarget,
 }: SettingsFormProps) {
   const router = useRouter();
   const [users, setUsers] = useState(initialUsers);
+  const [monthlyTarget, setMonthlyTarget] = useState(initialTarget);
   const [saving, setSaving] = useState(false);
 
   async function handleSave() {
     setSaving(true);
-    const result = await updateSettingsAction({ users });
+    const result = await updateSettingsAction({ users, monthlyTarget });
     setSaving(false);
 
     if (result.success) {
@@ -81,6 +84,30 @@ export function SettingsForm({
           </CardContent>
         </Card>
       ))}
+
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base">Monthly Target</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <div>
+            <Label>Target Amount</Label>
+            <Input
+              type="number"
+              step="0.01"
+              min="0"
+              placeholder="e.g. 5000"
+              value={monthlyTarget || ""}
+              onChange={(e) =>
+                setMonthlyTarget(parseFloat(e.target.value) || 0)
+              }
+            />
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Set a monthly spending target to track on your dashboard
+          </p>
+        </CardContent>
+      </Card>
 
       <Button className="w-full" onClick={handleSave} disabled={saving}>
         {saving ? "Saving..." : "Save Settings"}
