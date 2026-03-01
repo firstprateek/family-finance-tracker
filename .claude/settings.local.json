@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@latest . --ts --tailwind --eslint --app --src-dir --import-alias \"@/*\" --use-npm)",
+      "Bash(npm install:*)",
+      "Bash(npx shadcn@latest add:*)",
+      "Bash(npm run build:*)",
+      "Bash(node --version:*)",
+      "Bash(npx next build:*)",
+      "Bash(ls:*)",
+      "mcp__Claude_Preview__preview_start"
+    ]
+  }
+}

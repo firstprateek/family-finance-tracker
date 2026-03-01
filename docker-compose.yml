@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - finance-data:/app/data
+    environment:
+      - DATABASE_PATH=/app/data/finance.db
+      - OLLAMA_URL=http://host.docker.internal:11434
+      - OLLAMA_MODEL=llama3.2
+      - OLLAMA_VISION_MODEL=llama3.2-vision
+    restart: unless-stopped
+
+volumes:
+  finance-data:
