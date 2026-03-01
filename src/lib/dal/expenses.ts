@@ -168,10 +168,32 @@ export function getMonthlyAverageExpenses(excludeMonth?: string): {
   average: number;
   monthCount: number;
 } {
-  const excludeClause = excludeMonth
-    ? `WHERE month != '${excludeMonth}'`
-    : "";
+  // First try excluding the viewed month so it doesn't compare against itself
+  if (excludeMonth) {
+    const row = db()
+      .prepare(
+        `SELECT
+           AVG(month_total) as average,
+           COUNT(*) as month_count
+         FROM (
+           SELECT substr(date, 1, 7) as month, SUM(amount) as month_total
+           FROM expenses
+           WHERE is_excluded = 0
+           GROUP BY substr(date, 1, 7)
+         ) WHERE month != ?`
+      )
+      .get(excludeMonth) as { average: number | null; month_count: number };
 
+    // If there are other months to compare against, use them
+    if (row.month_count > 0) {
+      return {
+        average: row.average ? Math.round(row.average * 100) / 100 : 0,
+        monthCount: row.month_count,
+      };
+    }
+  }
+
+  // Fallback: include all months (handles single-month data)
   const row = db()
     .prepare(
       `SELECT
@@ -182,7 +204,7 @@ export function getMonthlyAverageExpenses(excludeMonth?: string): {
          FROM expenses
          WHERE is_excluded = 0
          GROUP BY substr(date, 1, 7)
-       ) ${excludeClause}`
+       )`
     )
     .get() as { average: number | null; month_count: number };
 
