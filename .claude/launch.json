@@ -6,6 +6,54 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["next", "dev"],
       "port": 3000
+    },
+    {
+      "name": "fintrack-dev",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": [
+        "-c",
+        "cd /Users/padi/Documents/projects/ai-projects/fintrack && npx next dev --turbopack --port 3001"
+      ],
+      "port": 3001
+    },
+    {
+      "name": "pulse-dev",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": [
+        "-c",
+        "cd /Users/padi/Documents/projects/ai-projects/pulse && npx next dev --port 3005"
+      ],
+      "port": 3005
+    },
+    {
+      "name": "listy-dev",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": [
+        "-c",
+        "cd /Users/padi/Documents/projects/ai-projects/listy && npx vite --port 5174 --strictPort"
+      ],
+      "port": 5174
+    },
+    {
+      "name": "neon-swarm",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": [
+        "-c",
+        "cd /Users/padi/Documents/projects/ai-projects/neon-swarm && npx vite --port 5173 --strictPort"
+      ],
+      "port": 5173
+    },
+    {
+      "name": "personal-site",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4321",
+        "--directory",
+        "/Users/padi/Documents/projects/ai-projects/personal-website"
+      ],
+      "port": 4321
     }
   ]
 }
