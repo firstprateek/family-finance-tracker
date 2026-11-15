@@ -48,3 +48,6 @@ LEARN.md
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local Claude Code files
+.claude/
